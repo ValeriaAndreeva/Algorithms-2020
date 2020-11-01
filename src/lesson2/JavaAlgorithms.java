@@ -3,6 +3,9 @@ package lesson2;
 import kotlin.NotImplementedError;
 import kotlin.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class JavaAlgorithms {
     /**
@@ -128,7 +131,25 @@ public class JavaAlgorithms {
      * Справка: простым считается число, которое делится нацело только на 1 и на себя.
      * Единица простым числом не считается.
      */
+    private static boolean Prime(int a) {
+        if (a % 2 == 0) return false;
+        for (int i = 3; i*i <= a; i = i + 2 ) {
+            if (a % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     static public int calcPrimesNumber(int limit) {
-        throw new NotImplementedError();
+        int res = 0;
+        for (int i = 0; i < limit; i++) {
+            if (Prime(i))
+                res++;
+        }
+        return res;
     }
 }
+
+
