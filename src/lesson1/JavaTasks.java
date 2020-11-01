@@ -2,6 +2,8 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.io.*;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
@@ -98,8 +100,29 @@ public class JavaTasks {
      * 99.5
      * 121.3
      */
-    static public void sortTemperatures(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortTemperatures(String inputName, String outputName) throws IOException {
+        int min = - 2700;
+        int max = 5000;
+        int [] count = new int[max - min + 1];
+
+        try (BufferedReader rd = new BufferedReader(new FileReader(inputName))) {
+            String str = rd.readLine();
+            while (str != null) {
+                int temp = (int) (Double.parseDouble(str) * 10);
+                count[temp - min]++;
+                str = rd.readLine();
+            }
+        }
+        try (BufferedWriter wr = new BufferedWriter(new FileWriter(outputName))) {
+            for (int j = 0; j < count.length; j++) {
+                while (count[j] > 0) {
+                    double temp = ((j + min) / 10.0);
+                    wr.write(String.valueOf(temp));
+                    wr.newLine();
+                    count[j]--;
+                }
+            }
+        }
     }
 
     /**
@@ -150,6 +173,16 @@ public class JavaTasks {
      * Результат: second = [1 3 4 9 9 13 15 20 23 28]
      */
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
-        throw new NotImplementedError();
+        int i = 0;
+        int j = first.length;
+        for (int k = 0; k < second.length; k++) {
+            if ((j >= second.length) || (i < first.length && first[i].compareTo(second[j]) < 0)) {
+                first[i] = second[k];
+                i++;
+            } else {
+                second[j] = second[k];
+                j++ ;
+            }
+        }
     }
 }
